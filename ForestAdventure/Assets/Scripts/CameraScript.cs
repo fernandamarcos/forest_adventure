@@ -8,12 +8,16 @@ public class CameraFollow : MonoBehaviour
     public Vector3 offset;   // Desplazamiento relativo entre la cámara y el personaje
     public float smoothSpeed = 0.125f; // Velocidad de seguimiento
 
+    private Camera mainCamera;  // Referencia a la cámara principal
+    private float targetSize = 8f;  // Nuevo tamaño de la cámara
+
     private float minX, maxX, minY, maxY; // Límites de la cámara
 
     void Start()
     {
         // Configura los límites de la cámara en función de la escena
         SetCameraLimits();
+       
     }
 
     void LateUpdate()
@@ -42,7 +46,7 @@ public class CameraFollow : MonoBehaviour
         float halfWidth = cam.orthographicSize * cam.aspect;  // Ancho visible de la cámara
         float halfHeight = cam.orthographicSize; // Altura visible de la cámara
 
-        minX = -1f;
+        minX = 2f;
         maxX = 30f;
         minY = 1f;
         maxY = 2f;

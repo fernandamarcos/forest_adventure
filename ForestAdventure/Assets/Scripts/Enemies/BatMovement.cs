@@ -6,7 +6,7 @@ public class BatMovement : MonoBehaviour
 {
     public float speed = 3f; // Velocidad del murciélago
     public float minX = -6f; // Valor mínimo en X hasta donde el murciélago puede volar
-    public float maxX = 60f;  // Valor máximo en X hasta donde el murciélago puede volar
+    public float maxX = 45f;  // Valor máximo en X hasta donde el murciélago puede volar
     public float idleThreshold = 0.1f; // Umbral para considerar si el murciélago está lo suficientemente cerca del destino para cambiar de dirección
 
     private Vector2 startPosition;
@@ -50,11 +50,11 @@ public class BatMovement : MonoBehaviour
     {
         if (movingRight)
         {
-            transform.localScale = new Vector3(1, 1, 1); // Rotación a la derecha
+            transform.localScale = new Vector3(5, 4, 1); // Rotación a la derecha
         }
         else
         {
-            transform.localScale = new Vector3(-1, 1, 1); // Rotación a la izquierda
+            transform.localScale = new Vector3(-5, 4, 1); // Rotación a la izquierda
         }
     }
 }

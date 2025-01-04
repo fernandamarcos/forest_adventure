@@ -1,8 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 public class WarriorAttack : MonoBehaviour
+
 {
     public float attackRange = 1f; // Rango del ataque (distancia)
     public int attackDamage = 10;  // Daño que inflige el ataque
@@ -34,17 +34,22 @@ public class WarriorAttack : MonoBehaviour
         animator.SetTrigger("Attack");
 
         // Detectar colisiones con los enemigos en el rango de ataque
-        //Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, attackRange);
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, attackRange);
 
-        //// Revisar si alguno de los enemigos es golpeado
-        //foreach (Collider2D enemy in hitEnemies)
-        //{
-        //    if (enemy.CompareTag("Enemy"))
-        //    {
-        //        // Aquí puedes agregar el código para infligir daño al enemigo
-        //        enemy.GetComponent<EnemyHealth>().TakeDamage(attackDamage);
-        //    }
-        //}
+        // Revisar si alguno de los enemigos es golpeado
+        foreach (Collider2D enemy in hitEnemies)
+        {
+            if (enemy.CompareTag("Enemy"))
+            {
+                // Intentamos obtener el script Enemy (o sus derivados) para hacerle daño
+                Enemy enemyScript = enemy.GetComponent<Enemy>();
+
+                if (enemyScript != null)  // Si el enemigo tiene el script Enemy o derivado
+                {
+                    enemyScript.TakeDamage(attackDamage);  // Infligir daño al enemigo
+                }
+            }
+        }
     }
 
     // Llamada desde la animación al finalizar el ciclo del ataque

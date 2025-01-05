@@ -6,7 +6,7 @@ public abstract class Enemy : MonoBehaviour
     public float detectionRange = 5f;
     public float attackCooldown = 2f; // Tiempo entre ataques
     public int attackDamage = 5; // Daño del enemigo
-    private float nextAttackTime = 0f; // Control del tiempo entre ataques
+    public float nextAttackTime = 0f; // Control del tiempo entre ataques
 
 
     // Método para destruir al enemigo
@@ -24,5 +24,7 @@ public abstract class Enemy : MonoBehaviour
     protected virtual void Update()
     {
     }
+
 }
+
 

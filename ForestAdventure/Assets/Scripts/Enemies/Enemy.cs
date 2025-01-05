@@ -2,22 +2,12 @@ using UnityEngine;
 
 public abstract class Enemy : MonoBehaviour
 {
-    public int health;  // Salud común a todos los enemigos
+    private Transform player;
+    public float detectionRange = 5f;
+    public float attackCooldown = 2f; // Tiempo entre ataques
+    public int attackDamage = 5; // Daño del enemigo
+    private float nextAttackTime = 0f; // Control del tiempo entre ataques
 
-    // Método para recibir daño
-
-    protected void SetHealth(int newHealth)
-    {
-        health = newHealth;
-    }
-    public void TakeDamage(int damage)
-    {
-        health -= damage;  // Reducir la salud
-        if (health <= 0)
-        {
-            Die();  // Si la salud es 0 o menos, el enemigo muere
-        }
-    }
 
     // Método para destruir al enemigo
     protected virtual void Die()

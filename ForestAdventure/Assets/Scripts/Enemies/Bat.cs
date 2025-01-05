@@ -7,7 +7,6 @@ public class Bat : Enemy
 {
     protected override void Start()
     {
-        SetHealth(20);
     }
 
 }

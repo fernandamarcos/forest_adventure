@@ -7,7 +7,6 @@ public class Crab : GroundEnemy
     {
         base.Start();  // Llamamos al Start de la clase base
         SetJumpForce(5f);  // Ajustamos la fuerza de salto específica para el cangrejo
-        SetHealth(20);
     }
 
     protected override void HandleWallHit()

@@ -7,7 +7,6 @@ public class Rat : GroundEnemy
         base.Start();  // Llamamos al Start de la clase base
         SetJumpForce(4f);  // Ajustamos la fuerza de salto específica para la rata
         SetSpeed(1);
-        SetHealth(5);
     }
 
     protected override void HandleWallHit()

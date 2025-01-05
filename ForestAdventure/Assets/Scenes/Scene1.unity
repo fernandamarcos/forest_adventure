@@ -1193,9 +1193,10 @@ GameObject:
   - component: {fileID: 712223945}
   - component: {fileID: 712223948}
   - component: {fileID: 712223949}
-  - component: {fileID: 712223950}
   - component: {fileID: 712223951}
+  - component: {fileID: 712223953}
   - component: {fileID: 712223952}
+  - component: {fileID: 712223954}
   m_Layer: 5
   m_Name: Player
   m_TagString: Player
@@ -1312,27 +1313,6 @@ MonoBehaviour:
   JumpForce: 7
   Speed: 3
   FallMultiplier: 1
---- !u!95 &712223950
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 712223944}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 312496b25d842af4a938e96c7d5aaee0, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!61 &712223951
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1387,12 +1367,49 @@ MonoBehaviour:
   m_GameObject: {fileID: 712223944}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc64736580ec54347ba9221b2cc0eb2a, type: 3}
+  m_Script: {fileID: 11500000, guid: c25a163959b37db4196af6c6a13fd3e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 10
+  attackCooldown: 1
+  attackKey: 32
   attackRange: 1
-  attackDamage: 10
-  attackCooldown: 0.5
+  animator: {fileID: 0}
+--- !u!114 &712223953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 712223944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9a541164b29c2a4f8e8612c1e40ab54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 0
+--- !u!95 &712223954
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 712223944}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 312496b25d842af4a938e96c7d5aaee0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &765645913
 GameObject:
   m_ObjectHideFlags: 0
@@ -2564,6 +2581,7 @@ GameObject:
   - component: {fileID: 1223725658}
   - component: {fileID: 1223725659}
   - component: {fileID: 1223725660}
+  - component: {fileID: 1223725661}
   m_Layer: 6
   m_Name: Bat
   m_TagString: Enemy
@@ -2732,7 +2750,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d02937da9b8fce74895c712e0188cf3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 20
+  detectionRange: 5
+  attackCooldown: 2
+  attackDamage: 5
+--- !u!114 &1223725661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1223725653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9a541164b29c2a4f8e8612c1e40ab54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 0
 --- !u!1 &1262820476
 GameObject:
   m_ObjectHideFlags: 0
@@ -3251,6 +3285,7 @@ GameObject:
   - component: {fileID: 1575129222}
   - component: {fileID: 1575129221}
   - component: {fileID: 1575129220}
+  - component: {fileID: 1575129226}
   m_Layer: 6
   m_Name: Rat
   m_TagString: Enemy
@@ -3270,7 +3305,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7c9f5b309231c54c865ed09b8cd772a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 10
+  detectionRange: 5
+  attackCooldown: 2
+  attackDamage: 5
   speed: 10
   minX: -6
   maxX: 45
@@ -3434,6 +3471,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1575129226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1575129219}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9a541164b29c2a4f8e8612c1e40ab54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 0
 --- !u!1 &1579723604
 GameObject:
   m_ObjectHideFlags: 0
@@ -3769,7 +3820,7 @@ Transform:
   m_GameObject: {fileID: 1614929967}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 40.42, y: 1.1, z: -10}
+  m_LocalPosition: {x: -0.26, y: 1.06, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5286,6 +5337,7 @@ GameObject:
   - component: {fileID: 1947771655}
   - component: {fileID: 1947771659}
   - component: {fileID: 1947771660}
+  - component: {fileID: 1947771661}
   m_Layer: 6
   m_Name: Crab
   m_TagString: Enemy
@@ -5444,7 +5496,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7e86591f9e049845acbaf1ed3300970, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 10
+  detectionRange: 5
+  attackCooldown: 2
+  attackDamage: 5
   speed: 1
   minX: -6
   maxX: 20
@@ -5469,6 +5523,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1947771661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1947771654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9a541164b29c2a4f8e8612c1e40ab54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 0
 --- !u!1 &1962455594
 GameObject:
   m_ObjectHideFlags: 0

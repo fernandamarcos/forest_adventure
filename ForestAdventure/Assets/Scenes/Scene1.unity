@@ -1271,12 +1271,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 5
-  m_Sprite: {fileID: -3318188226485093758, guid: ae72133dacba6ec4eb33ecde48f50e56, type: 3}
+  m_Sprite: {fileID: -2164224423321271568, guid: ae72133dacba6ec4eb33ecde48f50e56, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
-  m_Size: {x: 0.28739753, y: 0.3323252}
+  m_Size: {x: 0.3, y: 0.4}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -1291,7 +1291,7 @@ Transform:
   m_GameObject: {fileID: 712223944}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.9069, y: -3.4257, z: 0}
+  m_LocalPosition: {x: -12.9, y: -3.4257, z: 0}
   m_LocalScale: {x: 3.6321821, y: 3.6321821, z: 3.6321821}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -1373,10 +1373,10 @@ BoxCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
+    border: {x: 0.14999999, y: 0, z: 0.17, w: 0.099999994}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.26, y: 0.32}
-    newSize: {x: 0.28739753, y: 0.3323252}
+    oldSize: {x: 0.55, y: 0.45}
+    newSize: {x: 0.3, y: 0.4}
     adaptiveTilingThreshold: 0.5
     drawMode: 1
     adaptiveTiling: 0
@@ -2858,7 +2858,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.05917099, y: 0.048295423}
+  m_Offset: {x: 0.05917099, y: -0.00558703}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -2869,7 +2869,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.37533718, y: 0.32386538}
+  m_Size: {x: 0.37533718, y: 0.21610042}
   m_EdgeRadius: 0
 --- !u!1 &1262820476
 GameObject:
@@ -3602,6 +3602,7 @@ GameObject:
   - component: {fileID: 1579723607}
   - component: {fileID: 1579723606}
   - component: {fileID: 1579723608}
+  - component: {fileID: 1579723609}
   m_Layer: 0
   m_Name: Spikes
   m_TagString: Untagged
@@ -3784,7 +3785,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 8.970587, y: -4.659732}
@@ -3800,6 +3801,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.0588264, y: 0.68053627}
   m_EdgeRadius: 0
+--- !u!114 &1579723609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1579723604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1f45c1cc4746fc4492d7c446fba5016, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 10
 --- !u!1 &1589195774
 GameObject:
   m_ObjectHideFlags: 0

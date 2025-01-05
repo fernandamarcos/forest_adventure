@@ -126,9 +126,7 @@ public abstract class GroundEnemy : Enemy
         if (collision.CompareTag("Player") && Time.time >= nextAttackTime)
         {
             // Atacar al jugador
-
             AttackPlayer(collision.gameObject);
-
             // Reiniciar cooldown de ataque
             nextAttackTime = Time.time + attackCooldown;
         }

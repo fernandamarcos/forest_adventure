@@ -37,7 +37,7 @@ public class Crab : GroundEnemy
         
         if (playerHealth != null)
         {
-            anim.SetTrigger("CrabAttack");
+            anim.SetTrigger("Attack");
             playerHealth.TakeDamage(attackDamage);
             Debug.Log("Jugador atacado con " + attackDamage + " de daño.");
         }

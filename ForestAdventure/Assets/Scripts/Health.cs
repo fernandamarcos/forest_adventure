@@ -26,7 +26,6 @@ public class Health : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-            anim.SetTrigger("Death");
             Die();  // Si la salud llega a 0, llama al método de muerte
         }
     }
@@ -43,7 +42,7 @@ public class Health : MonoBehaviour
     // Método para manejar la muerte
     private void Die()
     {
-        
-        Destroy(gameObject);  // Destruye el objeto cuando muere (puedes personalizar esto)
+        anim.SetTrigger("Death");
+        GetComponent<WarriorMovement>().enabled = false;
     }
 }

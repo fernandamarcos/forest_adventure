@@ -5,9 +5,10 @@ using UnityEngine;
 public class EnemyHealth : Health
 {
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
-        
+        base.Start();
+        SetCurrentHealth(50);        
     }
 
     // Update is called once per frame
@@ -16,8 +17,10 @@ public class EnemyHealth : Health
         
     }
 
+
     protected override void Die()
     {
+
         Destroy(gameObject);
     }
 }

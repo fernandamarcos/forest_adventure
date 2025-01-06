@@ -10,7 +10,6 @@ public class Spikes : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
-            Debug.Log("SPIKES CONTRA PLAYER");
             collision.GetComponent<Health>().TakeDamage(damage);
         }
         

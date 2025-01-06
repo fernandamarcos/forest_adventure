@@ -3,23 +3,19 @@ using UnityEngine;
 public abstract class Health : MonoBehaviour
 {
     [SerializeField] private int maxHealth = 100;  // Salud máxima (se puede personalizar para cada objeto)
-    private int currentHealth;  // Salud actual
+    protected int currentHealth;  // Salud actual
     protected Animator anim;
 
-    void Start()
+    protected virtual void Start()
     {
-        currentHealth = maxHealth;  // Inicializa la salud actual con la salud máxima
         anim = GetComponent<Animator>();
     }
 
     // Método para recibir daño
-    public void TakeDamage(int damage)
+    public virtual void TakeDamage(int damage)
     {
         currentHealth -= damage;  // Restamos el daño a la salud actual
 
-        if (currentHealth > 0) { // Animación de daño
-            anim.SetTrigger("Hurt");
-        }
 
         if (currentHealth <= 0)
         {
@@ -43,4 +39,7 @@ public abstract class Health : MonoBehaviour
 
     public int GetCurrentHealth()
         { return currentHealth; }
+
+    protected void SetCurrentHealth(int health) 
+    {  currentHealth = health; }
 }

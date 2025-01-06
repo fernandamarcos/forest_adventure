@@ -11,7 +11,7 @@ public abstract class Attack : MonoBehaviour
     protected void ApplyDamage(GameObject target)
     {
         Health targetHealth = target.GetComponent<Health>();
-        if (targetHealth != null)
+        if (targetHealth != null && CanAttack())
         {
             targetHealth.TakeDamage(damage); // Aplica daño si el objetivo tiene salud
         }

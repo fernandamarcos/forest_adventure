@@ -13,12 +13,15 @@ public class Bat : Enemy
     private Vector2 startPosition;
     private bool movingRight = true; // Para controlar la dirección del movimiento
     private Animator animator;
+    private Rigidbody2D rb;
 
     protected override void Start()
     {
         // Guardamos la posición inicial del murciélago
         startPosition = transform.position;
         animator = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
+        rb.gravityScale = 0;
     }
 
     protected override void Update()

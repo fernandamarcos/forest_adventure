@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class Health : MonoBehaviour
+public abstract class Health : MonoBehaviour
 {
-    [SerializeField] private int maxHealth;  // Salud máxima (se puede personalizar para cada objeto)
-    public int currentHealth;  // Salud actual
-    private Animator anim;
+    [SerializeField] private int maxHealth = 100;  // Salud máxima (se puede personalizar para cada objeto)
+    private int currentHealth;  // Salud actual
+    protected Animator anim;
 
     void Start()
     {
@@ -20,9 +20,6 @@ public class Health : MonoBehaviour
         if (currentHealth > 0) { // Animación de daño
             anim.SetTrigger("Hurt");
         }
-
-        if (currentHealth < 0)
-            currentHealth = 0;  // Asegurarse de que la salud no baje de 0
 
         if (currentHealth <= 0)
         {
@@ -40,9 +37,10 @@ public class Health : MonoBehaviour
     }
 
     // Método para manejar la muerte
-    private void Die()
+    protected virtual void Die()
     {
-        anim.SetTrigger("Death");
-        GetComponent<WarriorMovement>().enabled = false;
     }
+
+    public int GetCurrentHealth()
+        { return currentHealth; }
 }

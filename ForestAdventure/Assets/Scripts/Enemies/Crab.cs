@@ -8,6 +8,7 @@ public class Crab : GroundEnemy
     {
         base.Start();  // Llamamos al Start de la clase base
         SetJumpForce(5f);  // Ajustamos la fuerza de salto específica para el cangrejo
+        
     }
 
     protected override void HandleWallHit()
@@ -30,19 +31,5 @@ public class Crab : GroundEnemy
         movingRight = !movingRight;
 
     }
-
-    protected override void AttackPlayer(GameObject player)
-    {
-        Health playerHealth = player.GetComponent<Health>();
-        
-        if (playerHealth != null)
-        {
-            anim.SetTrigger("Attack");
-            playerHealth.TakeDamage(attackDamage);
-            Debug.Log("Jugador atacado con " + attackDamage + " de daño.");
-        }
-
-    }
-
 }
 

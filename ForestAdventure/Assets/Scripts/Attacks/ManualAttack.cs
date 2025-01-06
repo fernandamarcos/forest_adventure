@@ -37,7 +37,6 @@ public class ManualAttack : Attack
         animator.SetTrigger("Attack");
 
 
-        Debug.Log("Player is attacking!");
         Collider2D[] hitTargets = Physics2D.OverlapCircleAll(transform.position, attackRange);
         foreach (var target in hitTargets)
         {
@@ -47,6 +46,8 @@ public class ManualAttack : Attack
             }
         }
         ResetCooldown();
+
+        OnAttackAnimationEnd();
         
     }
 
@@ -64,4 +65,7 @@ public class ManualAttack : Attack
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
     }
+
+    public bool IsAttacking()
+    { return isAttacking; }
 }

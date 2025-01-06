@@ -19,6 +19,7 @@ public abstract class GroundEnemy : Enemy
     {
         base.Start();  // Llamamos al Start de la clase base
         rb = GetComponent<Rigidbody2D>();
+        attackDamage = 10; // Daño personalizado de los enemigos de tierra
 
         if (rb != null)
         {
@@ -118,5 +119,21 @@ public abstract class GroundEnemy : Enemy
     protected virtual void SetSpeed(float newSpeed)
     {
         speed = newSpeed;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player") && Time.time >= nextAttackTime)
+        {
+            // Atacar al jugador
+            AttackPlayer(collision.gameObject);
+            // Reiniciar cooldown de ataque
+            nextAttackTime = Time.time + attackCooldown;
+        }
+    }
+
+    protected virtual void AttackPlayer(GameObject player)
+    {
+        // Sobre-escrito en clases hijas
     }
 }

@@ -3,6 +3,7 @@ using UnityEngine.UIElements;
 
 public class Crab : GroundEnemy
 {
+    private Animator anim;
     protected override void Start()
     {
         base.Start();  // Llamamos al Start de la clase base
@@ -30,6 +31,18 @@ public class Crab : GroundEnemy
 
     }
 
+    protected override void AttackPlayer(GameObject player)
+    {
+        Health playerHealth = player.GetComponent<Health>();
+        
+        if (playerHealth != null)
+        {
+            anim.SetTrigger("Attack");
+            playerHealth.TakeDamage(attackDamage);
+            Debug.Log("Jugador atacado con " + attackDamage + " de daño.");
+        }
+
+    }
 
 }
 

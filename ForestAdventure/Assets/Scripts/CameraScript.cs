@@ -2,51 +2,51 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    public Transform target; // Referencia al personaje
-    public Vector3 offset;   // Desplazamiento relativo entre la cámara y el personaje
-    public float smoothSpeed = 0.125f; // Velocidad de seguimiento
+    public GameObject target; // Referencia al personaje (El GameObject del jugador)
+    public Vector3 offset;  // El desplazamiento relativo de la cámara respecto al personaje
+    public float smoothSpeed = 0.125f; // Velocidad de suavizado
 
-    private Camera mainCamera;  // Referencia a la cámara principal
-    private float targetSize = 8f;  // Nuevo tamaño de la cámara
+    private Camera mainCamera;
+    private float targetSize = 8f;
 
-    private float minX, maxX, minY, maxY; // Límites de la cámara
+    private float minX, maxX, minY, maxY;
 
     void Start()
     {
-        // Configura los límites de la cámara en función de la escena
         SetCameraLimits();
-       
     }
 
     void LateUpdate()
     {
         if (target != null)
         {
-            // Calcula la posición deseada de la cámara
-            Vector3 desiredPosition = target.position + offset;
+            // Calculamos la posición deseada para la cámara, tomando el transform del target y sumándole el offset
+            Vector3 desiredPosition = target.transform.position + offset;
 
-            // Restringe la cámara a los límites de la escena
+            // Restringimos la cámara a los límites de la escena
             desiredPosition.x = Mathf.Clamp(desiredPosition.x, minX, maxX);
             desiredPosition.y = Mathf.Clamp(desiredPosition.y, minY, maxY);
 
-            // Interpolación suave para el movimiento de la cámara
+            // Fijamos el eje Z de la cámara a 0.10 (sin modificar el valor de X y Y)
+            desiredPosition.z = -10;
+
+            // Interpolamos suavemente para un movimiento más fluido de la cámara
             Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
 
-            // Asigna la nueva posición a la cámara
+            // Asignamos la nueva posición a la cámara
             transform.position = smoothedPosition;
         }
     }
 
     void SetCameraLimits()
     {
-        // Obtén los límites de la escena (con base en el tamaño del mundo/escena)
         Camera cam = Camera.main;
-        float halfWidth = cam.orthographicSize * cam.aspect;  // Ancho visible de la cámara
+        float halfWidth = cam.orthographicSize * cam.aspect; // Ancho visible de la cámara
         float halfHeight = cam.orthographicSize; // Altura visible de la cámara
 
-        minX = 2f;
-        maxX = 30f;
-        minY = 1f;
-        maxY = 2f;
+        minX = 2.2f;  // Limite mínimo de X
+        maxX = 30f;   // Limite máximo de X
+        minY = 0f;   // Limite mínimo de Y
+        maxY = 2.6f;    // Limite máximo de Y
     }
 }

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Fireball : MonoBehaviour
+public class Fireball : Enemy
 {
     [SerializeField] private float fireballSpeed = 10f;  // Velocidad de disparo
     [SerializeField] private float lifetime = 5f;  // Tiempo de vida de la bola de fuego antes de ser destruida
@@ -8,7 +8,7 @@ public class Fireball : MonoBehaviour
     [SerializeField] private Collider2D col;  // Collider2D de la bola de fuego
     [SerializeField] private PhysicsMaterial2D bounceMaterial; // Material de física para el rebote
 
-    void Start()
+    protected override void Start()
     {
         
         rb = GetComponent<Rigidbody2D>();
@@ -20,18 +20,17 @@ public class Fireball : MonoBehaviour
         Destroy(gameObject, lifetime);
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+
+    protected override void Update()
     {
-        // Lógica adicional cuando la bola de fuego colisiona con otros objetos
-        // Por ejemplo, podrías dañar a un enemigo
     }
 
-    void Update()
+    protected override void OnCollisionEnter2D(Collision2D collision)
     {
-        // Destruir la bola de fuego si se sale de los límites del juego
-        if (transform.position.x < -6f || transform.position.x > 45f || transform.position.y < -10f || transform.position.y > 10f)
+        base.OnCollisionEnter2D(collision);
+        if (collision.gameObject.CompareTag("Player")) // Verificar si el objeto es el jugador
         {
-            Destroy(gameObject);
+            Die();
         }
     }
 }

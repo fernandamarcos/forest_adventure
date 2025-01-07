@@ -19,19 +19,20 @@ public class Wizard : MonoBehaviour
     private float fireballCooldown = 3f; // Intervalo de lanzamiento de bolas de fuego
     private float nextFireballTime = 0f; // Tiempo hasta el siguiente lanzamiento de bola de fuego
 
-    private Rigidbody2D rb; // Referencia al Rigidbody2D
-    private float raycastDistance = 2f; // Distancia del Raycast para detectar la pared
+    private Vector3 lastPosition; // Posición previa del wizard
+    private float timeSinceLastMove = 0f; // Tiempo desde el último movimiento
 
     void Start()
     {
         anim = GetComponent<Animator>(); // Obtén el Animator del Wizard
-        rb = GetComponent<Rigidbody2D>(); // Obtén el Rigidbody2D del Wizard
+        lastPosition = transform.position; // Inicializa la posición inicial del wizard
     }
 
     void Update()
     {
         MoveTowardsPlayer();
         CheckForWallAndJump();
+        CheckForIdleWhileWalking();
     }
 
     void MoveTowardsPlayer()
@@ -39,14 +40,14 @@ public class Wizard : MonoBehaviour
         // Calcula la distancia entre el wizard y el jugador
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
-        // Si está más lejos que la distancia de parada, se mueve hacia el jugador
         if (distanceToPlayer > stopDistance)
         {
             isMoving = true;
 
-            // Mover hacia el jugador
+            // Mover hacia el jugador directamente usando transform.position
             Vector3 direction = (player.position - transform.position).normalized;
-            rb.velocity = new Vector2(direction.x * moveSpeed, rb.velocity.y);
+            Vector3 newPosition = transform.position + direction * moveSpeed * Time.deltaTime;
+            transform.position = newPosition;
 
             // Girar según la dirección del movimiento
             if (direction.x > 0)
@@ -69,14 +70,8 @@ public class Wizard : MonoBehaviour
                 nextFireballTime = Time.time + fireballCooldown;
                 LaunchFireball();
             }
-            else
-            {
-                // Permitir que se reanude el movimiento si no está atacando
-                anim.SetBool("Attack", false);
-            }
         }
     }
-
 
     void LaunchFireball()
     {
@@ -95,42 +90,41 @@ public class Wizard : MonoBehaviour
         int y = Random.Range(5, 8);
         fireballRb.AddForce(new Vector2(fireballRb.mass * x * direction.x, fireballRb.mass * y), ForceMode2D.Impulse);
 
+
+
         // Desactivar animación de ataque tras un pequeño retraso
-        Invoke("ResetAttackAnimation", 0.5f); // Asegúrate de que la animación dura menos de 0.5s
+        Invoke("ResetAttackAnimation", 0.5f);
     }
 
     void ResetAttackAnimation()
     {
         anim.SetBool("Attack", false);
     }
+
     void CheckForWallAndJump()
     {
-        // Obtener la posición de los pies del wizard (restamos un pequeño valor en el eje Y)
-        Vector2 feetPosition = new Vector2(transform.position.x, transform.position.y - 1.5f);  // Ajusta el valor 0.5f según el tamaño del wizard
-
-        // Raycast para detectar una pared frente al wizard, ahora partiendo desde los pies
         if (isMoving && !isJumping)
         {
-            // Raycast hacia la derecha y hacia la izquierda
-            RaycastHit2D hitRight = Physics2D.Raycast(feetPosition, Vector2.right, 1f, wallLayer);  // Hacia la derecha
-            RaycastHit2D hitLeft = Physics2D.Raycast(feetPosition, Vector2.left, 1f, wallLayer);    // Hacia la izquierda
+            // Raycast hacia adelante para detectar una pared
+            Vector2 rayDirection = transform.localScale.x > 0 ? Vector2.right : Vector2.left;
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, rayDirection, 1f, wallLayer);
 
-            // Si detecta alguna pared, hacer que el wizard salte
-            if (hitRight.collider != null || hitLeft.collider != null)
+            if (hit.collider != null)
             {
                 Jump();
             }
 
             // Visualizar el rayo (opcional, solo para depuración)
-            Debug.DrawRay(feetPosition, Vector2.right * 1f, Color.red);  // Rayo hacia la derecha
-            Debug.DrawRay(feetPosition, Vector2.left * 1f, Color.red);   // Rayo hacia la izquierda
+            Debug.DrawRay(transform.position, rayDirection * 1f, Color.red);
         }
     }
 
     void Jump()
     {
         isJumping = true;
-        rb.AddForce(new Vector2(0, rb.mass*9f), ForceMode2D.Impulse);   // Aplica fuerza hacia arriba
+
+        // Elevar al mago manualmente en el eje Y
+        transform.position += new Vector3(0, 2f, 0);
 
         // Temporizador para permitir que el wizard deje de estar en estado de salto
         StartCoroutine(ResetJump());
@@ -140,5 +134,30 @@ public class Wizard : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f); // Espera un poco antes de permitir otro salto
         isJumping = false;
+    }
+
+    void CheckForIdleWhileWalking()
+    {
+        if (isMoving && !isJumping)
+        {
+            // Verificar si la posición ha cambiado
+            if (Vector3.Distance(transform.position, lastPosition) < 0.1f)
+            {
+                timeSinceLastMove += Time.deltaTime;
+
+                // Si han pasado más de 2 segundos sin moverse, salta
+                if (timeSinceLastMove >= 1f)
+                {
+                    Jump();
+                    timeSinceLastMove = 0f; // Reiniciar temporizador
+                }
+            }
+            else
+            {
+                // Si el wizard se ha movido, reinicia el temporizador y actualiza la posición
+                timeSinceLastMove = 0f;
+                lastPosition = transform.position;
+            }
+        }
     }
 }

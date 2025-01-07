@@ -15,7 +15,7 @@ public abstract class Enemy : MonoBehaviour
 
     // Método para dañar al jugador solo si no está atacando
     // Método para dañar al jugador solo si no está atacando
-    private void OnCollisionEnter2D(Collision2D collision)
+    protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player")) // Verificar si el objeto es el jugador
         {

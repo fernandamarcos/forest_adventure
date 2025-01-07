@@ -3,11 +3,12 @@ using UnityEngine;
 
 public class Wizard : MonoBehaviour
 {
-    public Transform player; // El jugador
+    private GameObject player; // El jugador
+    private Transform playerTransform;
     public float moveSpeed = 5f; // Velocidad de movimiento
     public float stopDistance = 10f; // Distancia para detenerse
     public GameObject fireballPrefab; // Prefab de la bola de fuego
-    public Transform fireballSpawnPoint; // Punto de lanzamiento de la bola de fuego
+    private Transform fireballSpawnPoint; // Punto de lanzamiento de la bola de fuego
 
     public float jumpForce = 10f; // Fuerza del salto
     public LayerMask wallLayer; // Capa de las paredes para el salto
@@ -26,6 +27,8 @@ public class Wizard : MonoBehaviour
     {
         anim = GetComponent<Animator>(); // Obtén el Animator del Wizard
         lastPosition = transform.position; // Inicializa la posición inicial del wizard
+        player = GameObject.FindGameObjectWithTag("Player");
+        playerTransform = player.GetComponentInChildren<Transform>();
     }
 
     void Update()
@@ -38,14 +41,14 @@ public class Wizard : MonoBehaviour
     void MoveTowardsPlayer()
     {
         // Calcula la distancia entre el wizard y el jugador
-        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+        float distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
 
         if (distanceToPlayer > stopDistance)
         {
             isMoving = true;
 
             // Mover hacia el jugador directamente usando transform.position
-            Vector3 direction = (player.position - transform.position).normalized;
+            Vector3 direction = (playerTransform.position - transform.position).normalized;
             Vector3 newPosition = transform.position + direction * moveSpeed * Time.deltaTime;
             transform.position = newPosition;
 
@@ -79,7 +82,7 @@ public class Wizard : MonoBehaviour
         anim.SetBool("Attack", true);
 
         // Instanciar la bola de fuego
-        GameObject fireball = Instantiate(fireballPrefab, fireballSpawnPoint.position, Quaternion.identity);
+        GameObject fireball = Instantiate(fireballPrefab, transform.position, Quaternion.identity);
         Rigidbody2D fireballRb = fireball.GetComponent<Rigidbody2D>();
 
         // Calcular dirección (basada en el lado hacia el que mira el Wizard)

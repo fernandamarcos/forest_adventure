@@ -49,4 +49,4 @@ MonoBehaviour:
   spawnPoints:
   - {fileID: 0}
   spawnInterval: 3
-  maxEnemies: 1
+  maxEnemies: 5

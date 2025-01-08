@@ -3,72 +3,72 @@ using UnityEngine.Audio;
 
 public class LevelManager : MonoBehaviour
 {
-    public GameObject enemySpawnerPrefab;  // Prefab del Spawner de Enemigos
-    public GameObject wizardPrefab;       // Prefab del Wizard (Maligno)
-    private Transform wizardSpawnPoint;    // Punto de spawn del Wizard (Maligno)
+    public GameObject enemySpawnerPrefab;  // Enemy Spawner prefab
+    public GameObject wizardPrefab;       // Wizard prefab
+    private Transform wizardSpawnPoint;    // Wizard spawn point
 
-    public AudioClip[] levelMusic;        // Música para cada nivel
-    public AudioSource musicPlayer;      // Componente AudioSource que reproduce la música
+    public AudioClip[] levelMusic;        // Music for the level
+    public AudioSource musicPlayer;      //  AudioSource component which will play the music
 
-    private int currentLevel = 0;        // Número del nivel actual
-    private EnemySpawner currentEnemySpawner; // Referencia al spawner actual
-    private PlayerHealth playerHealth;   // Referencia a la salud del jugador
+    private int currentLevel = 0;        // Level number
+    private EnemySpawner currentEnemySpawner; // Reference to current spawner
+    private PlayerHealth playerHealth;   // Reference to player's health
 
     void Start()
     {
-        playerHealth = FindObjectOfType<PlayerHealth>(); // Buscar el script de salud del jugador
-        StartLevel(); // Iniciar el primer nivel
+
+        playerHealth = FindObjectOfType<PlayerHealth>(); 
+        StartLevel(); 
         wizardSpawnPoint = wizardPrefab.GetComponentInChildren<Transform>();
     }
 
     void StartLevel()
     {
-        // Cambiar la música según el nivel actual
+
+        // Initialization and configuration of the level (music, enemy spawner, player health..)
+
         if (levelMusic.Length > currentLevel)
         {
             musicPlayer.clip = levelMusic[currentLevel];
-            musicPlayer.loop = true; // Repetir la música
+            musicPlayer.loop = true; 
             musicPlayer.Play();
         }
 
-        // Si hay un spawner de enemigos activo de niveles anteriores, destruirlo
         if (currentEnemySpawner != null)
         {
             Destroy(currentEnemySpawner.gameObject);
         }
 
-        // Instanciar el Spawner de Enemigos para este nivel
         currentEnemySpawner = Instantiate(enemySpawnerPrefab, Vector3.zero, Quaternion.identity).GetComponent<EnemySpawner>();
 
-        // Configurar el evento para cuando todos los enemigos sean derrotados
+        // Level is completed when all enemies have been killed
         currentEnemySpawner.OnAllEnemiesDefeated += HandleLevelCompletion;
 
-        // Reiniciar la vida del jugador al comienzo de cada nivel
-        playerHealth.ResetHealth();
+        playerHealth.ResetHealth(); // (for next level)
     }
 
     public void HandleLevelCompletion()
     {
-        // Cambiar al siguiente nivel
+        
         currentLevel++;
 
-        // Si hay más niveles disponibles
-        if (currentLevel < levelMusic.Length)
+        
+        if (currentLevel < levelMusic.Length) // If there are more available levels...
         {
-            // En el segundo nivel, instanciar al Wizard
-            if (currentLevel == 1) // El segundo nivel tiene el índice 1
+           
+            if (currentLevel == 1) 
             {
                 Instantiate(wizardPrefab, wizardSpawnPoint.position, Quaternion.identity);
             }
 
-            // Iniciar el siguiente nivel
+            
             StartLevel();
         }
-        else
+        else // If there are no more levels (the game finished)...
         {
-            // Si no hay más niveles, finalizar el juego
+            
             Debug.Log("¡Felicidades, has completado todos los niveles!");
-            // Aquí puedes cargar una escena final o reiniciar el juego
+            // Final scene or Restart game...
         }
     }
 }

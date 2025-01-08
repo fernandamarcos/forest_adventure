@@ -62,4 +62,15 @@ public class PlayerHealth : Health
             healthFillImage.color = Color.Lerp(Color.red, Color.green, healthPercentage);
         }
     }
+
+    public void Respawn()
+    {
+        // Restart player configuration
+
+        ResetHealth();
+        anim.ResetTrigger("Death");
+        anim.Play("Idle");
+        GetComponent<WarriorMovement>().enabled = true;
+    }
+
 }

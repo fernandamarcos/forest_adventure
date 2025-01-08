@@ -1330,6 +1330,7 @@ GameObject:
   - component: {fileID: 738591405}
   - component: {fileID: 738591404}
   - component: {fileID: 738591403}
+  - component: {fileID: 738591407}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1420,6 +1421,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &738591407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 738591402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06de836f68508d041830586bf7cf44d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameOverMenu: {fileID: 0}
 --- !u!1 &740705156
 GameObject:
   m_ObjectHideFlags: 0
@@ -3493,7 +3507,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1f45c1cc4746fc4492d7c446fba5016, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
+  damage: 100
 --- !u!1 &1589195774
 GameObject:
   m_ObjectHideFlags: 0
@@ -3665,7 +3679,7 @@ Transform:
   m_GameObject: {fileID: 1614929967}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.2, y: 0.54, z: -10}
+  m_LocalPosition: {x: 13.7, y: 0.54, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10797,7 +10811,8 @@ PrefabInstance:
       propertyPath: healthFillImage
       value: 
       objectReference: {fileID: 999380285}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2020940340271302367, guid: 516ef7fbfb328294b83e9d0dff992ab4, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

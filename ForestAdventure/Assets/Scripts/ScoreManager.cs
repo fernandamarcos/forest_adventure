@@ -1,23 +1,23 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement; // Necesario para cambiar de escena
+using UnityEngine.SceneManagement; 
 
 public class ScoreManager : MonoBehaviour
 {
-    public Text scoreText; // Referencia al texto UI que muestra la puntuación
-    private int currentScore = 0; // Puntuación actual
+    public Text scoreText; 
+    private int currentScore = 0; 
 
     void Start()
     {
-        UpdateScoreUI(); // Inicializa el texto de la puntuación
+        UpdateScoreUI(); 
     }
 
     public void AddScore(int amount)
     {
-        currentScore += amount; // Sumar puntos
-        UpdateScoreUI(); // Actualizar la UI
+        currentScore += amount; 
+        UpdateScoreUI(); 
 
-        // Comprobar si la puntuación ha alcanzado 22 y cambiar a la escena "YouWin"
+        // Condition to win - all coins have been collected
         if (currentScore >= 22)
         {
             LoadYouWinScene();
@@ -26,12 +26,12 @@ public class ScoreManager : MonoBehaviour
 
     void UpdateScoreUI()
     {
-        scoreText.text = "Score: " + currentScore; // Actualiza el texto en la interfaz
+        scoreText.text = "Score: " + currentScore; 
     }
 
     void LoadYouWinScene()
     {
-        // Cargar la escena "YouWin"
-        SceneManager.LoadScene("YouWin"); // Asegúrate de que esta escena esté en las Build Settings
+        
+        SceneManager.LoadScene("YouWin"); 
     }
 }

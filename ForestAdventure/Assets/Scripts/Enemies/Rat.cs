@@ -4,14 +4,14 @@ public class Rat : GroundEnemy
 {
     protected override void Start()
     {
-        base.Start();  // Llamamos al Start de la clase base
-        SetJumpForce(4f);  // Ajustamos la fuerza de salto específica para la rata
+        base.Start();  
+        SetJumpForce(4f);  
         SetSpeed(1);
     }
 
     protected override void HandleWallHit()
     {
-        // Si la rata golpea una pared, cambia de dirección y no salta
-        ChangeDirection();  // Simplemente cambia de dirección sin saltar
+        // Si la rata golpea una pared, cambia de direcciÃ³n y no salta
+        ChangeDirection();  // Simplemente cambia de direcciÃ³n sin saltar
     }
 }

@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    public GameObject target; // Referencia al personaje (El GameObject del jugador)
-    public Vector3 offset;  // El desplazamiento relativo de la cámara respecto al personaje
-    public float smoothSpeed = 0.125f; // Velocidad de suavizado
+    public GameObject target; 
+    public Vector3 offset;  
+    public float smoothSpeed = 0.125f; 
 
     private Camera mainCamera;
     private float targetSize = 8f;
@@ -20,20 +20,20 @@ public class CameraFollow : MonoBehaviour
     {
         if (target != null)
         {
-            // Calculamos la posición deseada para la cámara, tomando el transform del target y sumándole el offset
+            // Calculate desired position for the camera
             Vector3 desiredPosition = target.transform.position + offset;
 
-            // Restringimos la cámara a los límites de la escena
+            // Restrict camera to the scenes limits
             desiredPosition.x = Mathf.Clamp(desiredPosition.x, minX, maxX);
             desiredPosition.y = Mathf.Clamp(desiredPosition.y, minY, maxY);
 
-            // Fijamos el eje Z de la cámara a 0.10 (sin modificar el valor de X y Y)
+            
             desiredPosition.z = -10;
 
-            // Interpolamos suavemente para un movimiento más fluido de la cámara
+            // Interpolate for smooth camera movement 
             Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
 
-            // Asignamos la nueva posición a la cámara
+            
             transform.position = smoothedPosition;
         }
     }
@@ -41,8 +41,8 @@ public class CameraFollow : MonoBehaviour
     void SetCameraLimits()
     {
         Camera cam = Camera.main;
-        float halfWidth = cam.orthographicSize * cam.aspect; // Ancho visible de la cámara
-        float halfHeight = cam.orthographicSize; // Altura visible de la cámara    }
+        float halfWidth = cam.orthographicSize * cam.aspect; 
+        float halfHeight = cam.orthographicSize;    }
 }
 
 }

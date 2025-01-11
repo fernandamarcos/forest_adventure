@@ -3,48 +3,48 @@ using UnityEngine;
 
 public abstract class GroundEnemy : Enemy
 {
-    public float speed = 10f;  // Velocidad de movimiento
-    public float minX = -6f;  // Límite inferior (inicio en X)
-    public float maxX = 20f;  // Límite superior (fin en X)
-    protected bool movingRight = true;  // Dirección de movimiento
+    public float speed = 10f;  
+    public float minX = -6f;  
+    public float maxX = 20f;  
+    protected bool movingRight = true;  
 
     protected Rigidbody2D rb;
-    protected bool isJumping = false;   // Estado de salto
+    protected bool isJumping = false;   
 
-    protected float wallCheckDistance = 0.5f;  // Distancia para verificar si hay una pared
-    protected float jumpForce = 6f; // Fuerza del salto
-    protected float forwardJumpForce = 1f; // Impulso hacia adelante durante el salto
+    protected float wallCheckDistance = 0.5f;  
+    protected float jumpForce = 6f; 
+    protected float forwardJumpForce = 1f; 
 
-    // Start se llama cuando el objeto se inicializa
+    
     protected override void Start()
     {
-        base.Start();  // Llamamos al Start de la clase base
+        base.Start();  
         rb = GetComponent<Rigidbody2D>();
-        attackDamage = 10; // Daño personalizado de los enemigos de tierra
+        attackDamage = 10; 
 
         if (rb != null)
         {
-            // Bloquea la rotación en el eje Z para evitar que de volteretas
+            
             rb.freezeRotation = true;
         }
     }
 
-    // Update se llama una vez por frame
+    
     protected override void Update()
     {
-        base.Update();  // Llamamos al Update de la clase base
+        base.Update();  
 
         if (!isJumping)
         {
-            Move();  // Si no está saltando, mueve al enemigo
+            Move();  
         }
         else
         {
-            CheckIfJumpFinished();  // Verifica si el salto ha terminado
+            CheckIfJumpFinished();  
         }
     }
 
-    // Movimiento general del enemigo
+ 
     protected virtual void Move()
     {
         // Raycast para detectar paredes antes de moverse
@@ -64,53 +64,53 @@ public abstract class GroundEnemy : Enemy
             HandleWallHit();
         }
 
-        // Cambio de dirección cuando alcanza los límites
+        // Cambio de direcciÃ³n cuando alcanza los lÃ­mites
         if (rb.position.x >= maxX || rb.position.x <= minX)
         {
             ChangeDirection();
         }
     }
 
-    // Método para cambiar de dirección, se puede sobrescribir en las clases hijas
+    // MÃ©todo para cambiar de direcciÃ³n, se puede sobrescribir en las clases hijas
     protected virtual void ChangeDirection()
     {
-        movingRight = !movingRight;  // Cambiar la dirección del movimiento
+        movingRight = !movingRight;  // Cambiar la direcciÃ³n del movimiento
 
         Vector3 newScale = transform.localScale;
         newScale.x = -newScale.x;  // Invertir solo el eje X
         transform.localScale = newScale;
     }
 
-    // Método para manejar lo que sucede cuando el enemigo golpea una pared
+    // MÃ©todo para manejar lo que sucede cuando el enemigo golpea una pared
     protected virtual void HandleWallHit()
     {
     }
 
-    // Método para hacer que el enemigo comience a saltar
+    
     protected virtual void StartJump()
     {
         if (!isJumping)  // Evita saltos consecutivos
         {
             isJumping = true;
-            rb.velocity = new Vector2(rb.velocity.x, 0f);  // Resetear la velocidad Y antes de aplicar el salto
-            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);  // Aplicar fuerza hacia arriba para simular el salto
+            rb.velocity = new Vector2(rb.velocity.x, 0f);  
+            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);  
 
             // Impulso hacia adelante
-            float moveDirection = movingRight ? 1f : -1f; // Determinar si va hacia la derecha o izquierda
-            rb.velocity = new Vector2(moveDirection * forwardJumpForce + rb.velocity.x, rb.velocity.y);  // Aplica el impulso hacia adelante
+            float moveDirection = movingRight ? 1f : -1f; 
+            rb.velocity = new Vector2(moveDirection * forwardJumpForce + rb.velocity.x, rb.velocity.y);  
         }
     }
 
-    // Método para verificar si el salto ha terminado
+    
     private void CheckIfJumpFinished()
     {
-        if (rb.velocity.y <= 0f)  // Cuando la velocidad Y sea 0 o negativa, significa que está cayendo
+        if (rb.velocity.y <= 0f)  
         {
-            isJumping = false;  // El salto ha terminado
+            isJumping = false;  
         }
     }
 
-    // Método para personalizar el jumpForce para cada enemigo (se sobrescribe en las clases hijas)
+    // MÃ©todo para personalizar el jumpForce para cada enemigo (se sobrescribe en las clases hijas)
     protected virtual void SetJumpForce(float newJumpForce)
     {
         jumpForce = newJumpForce;

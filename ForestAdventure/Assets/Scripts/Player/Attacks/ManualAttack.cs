@@ -4,18 +4,17 @@ using UnityEngine;
 
 public class ManualAttack : Attack
 {
-    public KeyCode attackKey = KeyCode.Space; // Tecla para atacar
-    public float attackRange = 1f; // Rango del ataque
+    public KeyCode attackKey = KeyCode.Space; 
+    public float attackRange = 1f; 
     private bool isAttacking;
     protected bool hasDamaged; 
 
-    [SerializeField]
-    private Animator animator;
+    [SerializeField] private Animator animator;
 
 
     void Start()
     {
-        // Obtener el componente Animator del jugador
+        
         animator = GetComponent<Animator>();
         if (animator == null)
         {
@@ -33,7 +32,7 @@ public class ManualAttack : Attack
 
     public override void PerformAttack()
     {
-        isAttacking = true;  // Indica que el ataque está en curso
+        isAttacking = true;  
         animator.SetBool("isAttacking", true);
         animator.SetTrigger("Attack");
         Collider2D[] hitTargets = Physics2D.OverlapCircleAll(transform.position, attackRange);
@@ -50,9 +49,9 @@ public class ManualAttack : Attack
     }
     public void OnAttackAnimationEnd()
     {
-        // Cambiar a otro estado (por ejemplo, "Idle" o "Run")
+        
         isAttacking = false;
-        animator.SetBool("isAttacking", false);  // Puedes tener un parámetro "isAttacking" para transitar
+        animator.SetBool("isAttacking", false);  
     }
     public bool IsAttacking()
         { return isAttacking; }

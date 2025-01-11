@@ -9,7 +9,7 @@ public class CameraFollow : MonoBehaviour
     private Camera mainCamera;
     private float targetSize = 8f;
 
-    private float minX, maxX, minY, maxY;
+    public float minX, maxX, minY, maxY;
 
     void Start()
     {
@@ -42,11 +42,7 @@ public class CameraFollow : MonoBehaviour
     {
         Camera cam = Camera.main;
         float halfWidth = cam.orthographicSize * cam.aspect; // Ancho visible de la cámara
-        float halfHeight = cam.orthographicSize; // Altura visible de la cámara
+        float halfHeight = cam.orthographicSize; // Altura visible de la cámara    }
+}
 
-        minX = 2.2f;  // Limite mínimo de X
-        maxX = 30f;   // Limite máximo de X
-        minY = 0f;   // Limite mínimo de Y
-        maxY = 2.6f;    // Limite máximo de Y
-    }
 }

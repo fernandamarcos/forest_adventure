@@ -7,7 +7,7 @@ public class UIManager : MonoBehaviour
 {
     
     [SerializeField] private GameObject pauseMenu;
-    // Sonido si quieres
+    
 
     private void Start()
     {

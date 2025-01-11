@@ -8,65 +8,59 @@ public class LevelManager : MonoBehaviour
     private Transform wizardSpawnPoint;    // Wizard spawn point
 
     public AudioClip[] levelMusic;        // Music for the level
-    public AudioSource musicPlayer;      //  AudioSource component which will play the music
+    public AudioSource musicPlayer;       //  AudioSource component which will play the music
 
-    private int currentLevel = 0;        // Level number
+    private int currentLevel = 0;         // Level number
     private EnemySpawner currentEnemySpawner; // Reference to current spawner
-    private PlayerHealth playerHealth;   // Reference to player's health
+    private PlayerHealth playerHealth;    // Reference to player's health
 
     void Start()
     {
-
-        playerHealth = FindObjectOfType<PlayerHealth>(); 
-        StartLevel(); 
+        playerHealth = FindObjectOfType<PlayerHealth>();
+        StartLevel();
         wizardSpawnPoint = wizardPrefab.GetComponentInChildren<Transform>();
     }
 
     void StartLevel()
     {
+        // Check if the currentEnemySpawner already exists
+        if (currentEnemySpawner == null)
+        {
+            // Instantiate a new spawner only if it doesn't exist already
+            currentEnemySpawner = Instantiate(enemySpawnerPrefab, Vector3.zero, Quaternion.identity).GetComponent<EnemySpawner>();
+        }
 
         // Initialization and configuration of the level (music, enemy spawner, player health..)
-
         if (levelMusic.Length > currentLevel)
         {
             musicPlayer.clip = levelMusic[currentLevel];
-            musicPlayer.loop = true; 
+            musicPlayer.loop = true;
             musicPlayer.Play();
         }
 
-        if (currentEnemySpawner != null)
-        {
-            Destroy(currentEnemySpawner.gameObject);
-        }
-
-        currentEnemySpawner = Instantiate(enemySpawnerPrefab, Vector3.zero, Quaternion.identity).GetComponent<EnemySpawner>();
+        // Reset the health and other level-specific settings
+        playerHealth.ResetHealth(); // (for next level)
 
         // Level is completed when all enemies have been killed
         currentEnemySpawner.OnAllEnemiesDefeated += HandleLevelCompletion;
-
-        playerHealth.ResetHealth(); // (for next level)
     }
 
     public void HandleLevelCompletion()
     {
-        
         currentLevel++;
 
-        
         if (currentLevel < levelMusic.Length) // If there are more available levels...
         {
-           
-            if (currentLevel == 1) 
+            if (currentLevel == 1)
             {
                 Instantiate(wizardPrefab, wizardSpawnPoint.position, Quaternion.identity);
             }
 
-            
+            // Re-initialize for next level
             StartLevel();
         }
         else // If there are no more levels (the game finished)...
         {
-            
             Debug.Log("¡Felicidades, has completado todos los niveles!");
             // Final scene or Restart game...
         }

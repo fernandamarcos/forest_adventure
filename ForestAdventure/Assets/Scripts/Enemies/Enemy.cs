@@ -47,5 +47,7 @@ public abstract class Enemy : MonoBehaviour
     {
         isDamaged = false;
     }
-    
+
+    public void Start() {}
+    public void Update() {}
 }

@@ -1,49 +1,49 @@
 using UnityEngine;
-using UnityEngine.UI;  // Necesario para trabajar con UI (Slider)
+using UnityEngine.UI;  
 
 public abstract class Health : MonoBehaviour
 {
-    [SerializeField] protected int maxHealth = 100;  // Salud máxima
-    protected int currentHealth;  // Salud actual
+    [SerializeField] protected int maxHealth = 100;  
+    protected int currentHealth;  
     protected Animator anim;
 
 
     protected virtual void Start()
     {
         anim = GetComponent<Animator>();
-        currentHealth = maxHealth;  // Inicializa la salud con el valor máximo
+        currentHealth = maxHealth;  
 
     }
 
-    // Método para recibir daño
+    // MÃ©todo para recibir daÃ±o
     public virtual void TakeDamage(int damage)
     {
-        currentHealth -= damage;  // Restamos el daño a la salud actual
+        currentHealth -= damage;  
 
         if (currentHealth < 0)
-            currentHealth = 0;  // No permitir que la salud sea negativa
+            currentHealth = 0;  
 
 
         if (currentHealth <= 0)
         {
-            Die();  // Si la salud llega a 0 o menos, llama al método de muerte
+            Die();  
         }
     }
 
-    // Método para sanar
+    // MÃ©todo para sanar
     public void Heal(int amount)
     {
-        currentHealth += amount;  // Aumentamos la salud
+        currentHealth += amount;  
 
         if (currentHealth > maxHealth)
-            currentHealth = maxHealth;  // No permitir que la salud supere el máximo
+            currentHealth = maxHealth;  
 
     }
 
-    // Método para manejar la muerte
+    
     protected virtual void Die()
     {
-        // Aquí puedes añadir lógica común para la muerte (animaciones, efectos, etc.)
+        
         Debug.Log($"{gameObject.name} ha muerto");
     }
 

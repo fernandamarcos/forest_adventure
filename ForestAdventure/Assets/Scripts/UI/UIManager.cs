@@ -27,7 +27,6 @@ public class UIManager : MonoBehaviour
 
     public void MainMenu()
     {
-        Debug.Log("Se ha invocado boton menu");
         SceneManager.LoadScene(0);
     }
 

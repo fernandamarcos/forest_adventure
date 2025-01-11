@@ -5,55 +5,55 @@ public class EnemyHealth : Health
 {
     private Rigidbody2D rb;
     private Collider2D collider;
-    private EnemySpawner enemySpawner;  // Referencia al EnemySpawner
-
+    private EnemySpawner enemySpawner;  
     protected override void Start()
     {
         base.Start();
-        SetCurrentHealth(10); // Configurar la salud inicial
+        SetCurrentHealth(10); 
         rb = GetComponent<Rigidbody2D>();
         collider = GetComponent<Collider2D>();
     }
 
     protected override void Die()
     {
-        // Desactivar el comportamiento del enemigo
+        
         Enemy enemy = GetComponent<Enemy>();
         if (enemy != null)
         {
             enemy.enabled = false;
         }
 
-        // Activar la gravedad para que caiga
+        // Activate gravity for enemy to fall
         rb.gravityScale = 1;
 
-        // Desactivar el collider para que no interactúe más con otros objetos
+        // Deactivate collider so it does not interact with other objects
         collider.enabled = false;
         rb.transform.rotation = Quaternion.Euler(0f, 0f, -45f);
-        rb.AddForce(new Vector2(0, rb.mass * 5f), ForceMode2D.Impulse); // Ajustar el empuje
+        rb.AddForce(new Vector2(0, rb.mass * 5f), ForceMode2D.Impulse); 
 
-        // Notificar al spawner que el enemigo ha muerto
+        // Notify spawner
         if (enemySpawner != null)
         {
             enemySpawner.OnEnemyDeath();
         }
 
-        // Iniciar la corutina para destruir el enemigo al caer fuera del nivel
+        // Start corroutine to destroy enemy once it is out of the scene
         StartCoroutine(DestroyWhenFallen());
     }
 
+    // Corroutine
     private IEnumerator DestroyWhenFallen()
     {
         float x = transform.position.x;
 
-        // Esperar hasta que el enemigo llegue a y = -9
+        // Wait until enemy is at y=-9 to destroy it
         while (transform.position.y > -9f)
         {
-            transform.position = new Vector3(x, transform.position.y, transform.position.z); // Bloquear posición X
+            transform.position = new Vector3(x, transform.position.y, transform.position.z); 
             yield return null;
         }
 
-        // Destruir el enemigo cuando haya caído lo suficiente
+        
         Destroy(gameObject);
     }
 

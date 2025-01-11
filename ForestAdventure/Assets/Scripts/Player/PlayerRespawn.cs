@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerRespawn : MonoBehaviour
 {
@@ -25,9 +26,17 @@ public class PlayerRespawn : MonoBehaviour
 
     private void HandlePlayerDeath()
     {
-        transform.position = respawnPoint.position;
-        Debug.Log($"Respawn llamado. Nueva posición: {transform.position}");
-        playerHealth.Respawn();
+        if (SceneManager.GetActiveScene().buildIndex != 1)
+        {
+            transform.position = respawnPoint.position;
+            Debug.Log($"Respawn llamado. Nueva posición: {transform.position}");
+            playerHealth.Respawn();
+        }
+
+        if (SceneManager.GetActiveScene().buildIndex == 2)
+        {
+            SceneManager.LoadScene("MainMenu");
+        }
 
     }
 }

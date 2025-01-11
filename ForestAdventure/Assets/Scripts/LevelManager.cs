@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement; // Necesario para manejar las escenas
 
 public class LevelManager : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class LevelManager : MonoBehaviour
     private EnemySpawner currentEnemySpawner; // Reference to current spawner
     private PlayerHealth playerHealth;    // Reference to player's health
 
+    private string secondSceneName = "Level2";        // Nombre de la segunda escena (asignar en el Inspector)
+
     void Start()
     {
         playerHealth = FindObjectOfType<PlayerHealth>();
@@ -23,6 +26,13 @@ public class LevelManager : MonoBehaviour
 
     void StartLevel()
     {
+        // Si es el nivel 2, cargar la segunda escena
+        if (currentLevel == 1) // Segundo nivel (contando desde 0)
+        {
+            LoadSecondScene();
+            return; // Salir del método para evitar que se configure el nivel actual
+        }
+
         // Check if the currentEnemySpawner already exists
         if (currentEnemySpawner == null)
         {
@@ -45,19 +55,19 @@ public class LevelManager : MonoBehaviour
         currentEnemySpawner.OnAllEnemiesDefeated += HandleLevelCompletion;
     }
 
+    void LoadSecondScene()
+    {
+        Debug.Log("Cargando la segunda escena...");
+        SceneManager.LoadScene(secondSceneName); // Carga la escena especificada
+    }
+
     public void HandleLevelCompletion()
     {
         currentLevel++;
 
         if (currentLevel < levelMusic.Length) // If there are more available levels...
         {
-            if (currentLevel == 1)
-            {
-                Instantiate(wizardPrefab, wizardSpawnPoint.position, Quaternion.identity);
-            }
-
-            // Re-initialize for next level
-            StartLevel();
+            StartLevel(); // Continuar con el siguiente nivel
         }
         else // If there are no more levels (the game finished)...
         {

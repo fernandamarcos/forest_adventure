@@ -5,7 +5,7 @@ public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] private Transform[] spawnPoints;  // Puntos donde los enemigos pueden aparecer
     [SerializeField] private float spawnInterval = 3f; // Tiempo entre generaciones
-    [SerializeField] private int maxEnemies = 1;      // Número máximo de enemigos permitidos
+    [SerializeField] private int maxEnemies = 5;      // Número máximo de enemigos permitidos
     private int currentEnemyCount = 0;                // Contador de enemigos activos
     private int enemiesKilled = 0;                    // Contador de enemigos muertos
 

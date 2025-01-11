@@ -3,16 +3,15 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField] private Transform[] spawnPoints;  // Puntos donde los enemigos pueden aparecer
-    [SerializeField] private float spawnInterval = 3f; // Tiempo entre generaciones
-    [SerializeField] private int maxEnemies = 5;      // Número máximo de enemigos permitidos
-    private int currentEnemyCount = 0;                // Contador de enemigos activos
-    private int enemiesKilled = 0;                    // Contador de enemigos muertos
-
+    [SerializeField] private Transform[] spawnPoints;  
+    [SerializeField] private float spawnInterval = 3f; 
+    [SerializeField] private int maxEnemies = 5;      
+    private int currentEnemyCount = 0;                
+    private int enemiesKilled = 0;                    
     public delegate void AllEnemiesDefeated();        // Delegado para notificar que todos los enemigos han sido derrotados
     public event AllEnemiesDefeated OnAllEnemiesDefeated;
 
-    [SerializeField] private EnemyFactory enemyFactory;                // Referencia a la fábrica de enemigos
+    [SerializeField] private EnemyFactory enemyFactory;                
     private LevelManager levelManager;
 
     void Start()
@@ -34,11 +33,11 @@ public class EnemySpawner : MonoBehaviour
 
     private void SpawnEnemy()
     {
-        // Selecciona un índice aleatorio para el enemigo y el punto de spawn
+        // Selecciona un Ã­ndice aleatorio para el enemigo y el punto de spawn
         int randomIndex = Random.Range(0, enemyFactory.enemyPrefabs.Length);
         Transform spawnPoint = spawnPoints[randomIndex];
 
-        // Usar la fábrica para crear el enemigo
+        // Usar la fÃ¡brica para crear el enemigo
         GameObject spawnedEnemy = enemyFactory.CreateEnemy(randomIndex, spawnPoint);
 
         if (spawnedEnemy != null)

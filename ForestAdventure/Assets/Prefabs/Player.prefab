@@ -47,7 +47,7 @@ GameObject:
   - component: {fileID: 5940625195973445439}
   - component: {fileID: 5396625412903337399}
   - component: {fileID: 3018059201099965606}
-  - component: {fileID: 2020940340271302367}
+  - component: {fileID: 3042401109416664937}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -263,7 +263,7 @@ MonoBehaviour:
   attackKey: 32
   attackRange: -1.46
   animator: {fileID: 0}
---- !u!114 &2020940340271302367
+--- !u!114 &3042401109416664937
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

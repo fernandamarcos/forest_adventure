@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -5,7 +7,7 @@ public class PlayerHealth : Health
 {
     [SerializeField] private Slider healthSlider;  // Referencia al Slider de salud
     [SerializeField] private Image healthFillImage;  // Referencia al Image del "Fill" del Slider (el color de la barra)
-
+    public event Action OnDeath;
     protected override void Start()
     {
         base.Start();
@@ -28,7 +30,19 @@ public class PlayerHealth : Health
     {
         anim.SetTrigger("Death");
         GetComponent<WarriorMovement>().enabled = false;
+        StartCoroutine(HandleDeath());
+
     }
+
+    private IEnumerator HandleDeath()
+    {
+        // Espera un tiempo fijo, igual a la duración de la animación de "Death"
+        yield return new WaitForSeconds(2f);
+
+        // Dispara el evento OnDeath o realiza lógica adicional
+        OnDeath?.Invoke();
+    }
+
 
     public override void TakeDamage(int damage)
     {
@@ -63,11 +77,18 @@ public class PlayerHealth : Health
         }
     }
 
+    private void RestartHealthBar()
+    {
+        healthSlider.value = currentHealth;
+        UpdateHealthBarColor();
+    }
+
     public void Respawn()
     {
         // Restart player configuration
 
         ResetHealth();
+        RestartHealthBar();
         anim.ResetTrigger("Death");
         anim.Play("Idle");
         GetComponent<WarriorMovement>().enabled = true;
